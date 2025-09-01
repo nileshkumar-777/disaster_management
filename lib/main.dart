@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: _isLoading ? const LoadingScreen() : MainScreen(),
+      home: _isLoading ? const LoadingScreen() : LoginScreen(),
     );
   }
 }
