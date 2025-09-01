@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart'; // Add this
 import 'package:safe_app/loading.dart';
 import 'package:safe_app/login.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform, // Make sure firebase_options.dart is set up
+  );
   runApp(const MyApp());
 }
 
@@ -30,7 +36,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: _isLoading ? const LoadingScreen() : LoginScreen(),
+      home: _isLoading ? const LoadingScreen() : MainScreen(),
     );
   }
 }
