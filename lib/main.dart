@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart'; // Add this
-import 'package:safe_app/loading.dart';
-import 'package:safe_app/login.dart';
+import 'package:safe_app/login%20and%20loading/loading.dart';
+
 import 'firebase_options.dart';
+import 'package:safe_app/home_screen.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +27,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _isLoading = false;
       });
@@ -36,7 +38,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: _isLoading ? const LoadingScreen() : MainScreen(),
+      home: _isLoading ? const LoadingScreen() : DisasterManagementApp(),
     );
   }
 }

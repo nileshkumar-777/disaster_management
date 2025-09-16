@@ -17,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _usernameController.dispose();   //nilesh8kumar76@gmail.com
     _passwordController.dispose();
     super.dispose();
   }
@@ -121,7 +121,7 @@ class _MainScreenState extends State<MainScreen> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>  HomeScreen(),
+                      builder: (context) =>  DisasterManagementApp(),
                     ),
                   );
                 }).catchError((error) {
