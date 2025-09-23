@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:safe_app/guide.dart';
+import 'package:safe_app/profile.dart';
+
 
 
 class DisasterManagementApp extends StatelessWidget {
@@ -37,7 +39,7 @@ class _DisasterScreenState extends State<DisasterScreen> {
     _HomeScreenContent(), // The original screen content
     Center(child: Text('Safe Zones Map Page')), // Placeholder for Safe Zones
     Center(child: Text('Alerts Page')), // Placeholder for Alerts
-    Center(child: Text('Profile Page')), // Placeholder for Profile
+    ProfileScreenWidget(), // Placeholder for Profile
   ];
 
   void _onItemTapped(int index) {
