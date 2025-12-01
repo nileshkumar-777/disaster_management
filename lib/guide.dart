@@ -51,19 +51,36 @@ final Map<String, DisasterInfo> disasterData = {
     title: 'Earthquake Safety Guide',
     subtitle: 'Essential steps to stay safe during a seismic event.',
     footerTitle: 'After the Shaking Stops',
-    footerSubtitle: 'Check for injuries and damage. Be prepared for aftershocks.',
+    footerSubtitle:
+        'Check for injuries and damage. Be prepared for aftershocks.',
     bgColor: const Color(0xFF655A53),
     textColor: Colors.white,
     navActiveBgColor: const Color(0xFFF7C59F),
     navActiveTextColor: const Color(0xFF4C3F38),
     iconBgColor: Colors.black.withOpacity(0.2),
     sections: [
-      InstructionSection(title: 'Immediate Actions', instructions: [
-        Instruction(icon: Icons.table_restaurant, text: 'Drop, Cover, and Hold On under a sturdy table or desk.'),
-        Instruction(icon: Icons.door_sliding, text: 'Avoid doorways; they do not protect you from falling objects.'),
-        Instruction(icon: Icons.apartment, text: 'If indoors, stay inside. If outdoors, find an open area.'),
-        Instruction(icon: Icons.power_off, text: 'Be cautious of aftershocks and check for gas leaks.'),
-      ]),
+      InstructionSection(
+        title: 'Immediate Actions',
+        instructions: [
+          Instruction(
+            icon: Icons.table_restaurant,
+            text: 'Drop, Cover, and Hold On under a sturdy table or desk.',
+          ),
+          Instruction(
+            icon: Icons.door_sliding,
+            text:
+                'Avoid doorways; they do not protect you from falling objects.',
+          ),
+          Instruction(
+            icon: Icons.apartment,
+            text: 'If indoors, stay inside. If outdoors, find an open area.',
+          ),
+          Instruction(
+            icon: Icons.power_off,
+            text: 'Be cautious of aftershocks and check for gas leaks.',
+          ),
+        ],
+      ),
     ],
   ),
   'flood': DisasterInfo(
@@ -71,24 +88,52 @@ final Map<String, DisasterInfo> disasterData = {
     title: 'Flood Safety Guide',
     subtitle: 'Essential steps to stay safe.',
     footerTitle: 'After the Flood',
-    footerSubtitle: 'Wait for official clearance before re-entering flooded areas.',
+    footerSubtitle:
+        'Wait for official clearance before re-entering flooded areas.',
     bgColor: const Color(0xFF88C0D0),
     textColor: const Color(0xFF2E3440),
     navActiveBgColor: const Color(0xFF3B4252),
     navActiveTextColor: Colors.white,
     iconBgColor: Colors.white.withOpacity(0.5),
     sections: [
-      InstructionSection(title: 'How to Prepare', instructions: [
-        Instruction(icon: Icons.map, text: 'Know your flood risk and local elevation.'),
-        Instruction(icon: Icons.business_center, text: 'Prepare an emergency kit with essentials.'),
-        Instruction(icon: Icons.group, text: 'Create a family evacuation plan.'),
-      ]),
-      InstructionSection(title: 'How to React', instructions: [
-        Instruction(icon: Icons.terrain, text: 'Move to higher ground immediately.'),
-        Instruction(icon: Icons.directions_walk, text: 'Do not walk or drive through floodwaters.'),
-        Instruction(icon: Icons.electrical_services, text: 'Turn off utilities if instructed to do so.'),
-        Instruction(icon: Icons.phone_in_talk, text: 'Stay informed through official alerts.'),
-      ]),
+      InstructionSection(
+        title: 'How to Prepare',
+        instructions: [
+          Instruction(
+            icon: Icons.map,
+            text: 'Know your flood risk and local elevation.',
+          ),
+          Instruction(
+            icon: Icons.business_center,
+            text: 'Prepare an emergency kit with essentials.',
+          ),
+          Instruction(
+            icon: Icons.group,
+            text: 'Create a family evacuation plan.',
+          ),
+        ],
+      ),
+      InstructionSection(
+        title: 'How to React',
+        instructions: [
+          Instruction(
+            icon: Icons.terrain,
+            text: 'Move to higher ground immediately.',
+          ),
+          Instruction(
+            icon: Icons.directions_walk,
+            text: 'Do not walk or drive through floodwaters.',
+          ),
+          Instruction(
+            icon: Icons.electrical_services,
+            text: 'Turn off utilities if instructed to do so.',
+          ),
+          Instruction(
+            icon: Icons.phone_in_talk,
+            text: 'Stay informed through official alerts.',
+          ),
+        ],
+      ),
     ],
   ),
   'wildfire': DisasterInfo(
@@ -103,12 +148,27 @@ final Map<String, DisasterInfo> disasterData = {
     navActiveTextColor: const Color(0xFFBF616A),
     iconBgColor: Colors.black.withOpacity(0.2),
     sections: [
-      InstructionSection(title: 'Preparedness & Reaction', instructions: [
-        Instruction(icon: Icons.home, text: 'Clear flammable materials from around your home.'),
-        Instruction(icon: Icons.campaign, text: 'Stay informed and follow official evacuation orders.'),
-        Instruction(icon: Icons.air, text: 'Use an air purifier to protect your lungs from smoke.'),
-        Instruction(icon: Icons.medical_services, text: 'Have an emergency supply kit ready to go.'),
-      ]),
+      InstructionSection(
+        title: 'Preparedness & Reaction',
+        instructions: [
+          Instruction(
+            icon: Icons.home,
+            text: 'Clear flammable materials from around your home.',
+          ),
+          Instruction(
+            icon: Icons.campaign,
+            text: 'Stay informed and follow official evacuation orders.',
+          ),
+          Instruction(
+            icon: Icons.air,
+            text: 'Use an air purifier to protect your lungs from smoke.',
+          ),
+          Instruction(
+            icon: Icons.medical_services,
+            text: 'Have an emergency supply kit ready to go.',
+          ),
+        ],
+      ),
     ],
   ),
   'tsunami': DisasterInfo(
@@ -116,19 +176,37 @@ final Map<String, DisasterInfo> disasterData = {
     title: 'Tsunami Safety',
     subtitle: 'Know the signs. Protect yourself and your family.',
     footerTitle: 'After a Tsunami',
-    footerSubtitle: 'Wait for official "all clear" before returning to coastal areas.',
+    footerSubtitle:
+        'Wait for official "all clear" before returning to coastal areas.',
     bgColor: const Color(0xFF1A535C),
     textColor: Colors.white,
     navActiveBgColor: const Color(0xFFADE8F4),
     navActiveTextColor: const Color(0xFF1A535C),
     iconBgColor: Colors.black.withOpacity(0.25),
     sections: [
-      InstructionSection(title: 'Preparedness & Reaction', instructions: [
-        Instruction(icon: Icons.vibration, text: 'If you feel an earthquake, drop, cover, then hold on. When shaking stops, move to high ground.'),
-        Instruction(icon: Icons.directions_run, text: 'Evacuate immediately. Do not wait for official warnings.'),
-        Instruction(icon: Icons.waves, text: 'Stay away from the coast. A tsunami is a series of waves that may last for hours.'),
-        Instruction(icon: Icons.radio, text: 'Listen to emergency information and alerts.'),
-      ]),
+      InstructionSection(
+        title: 'Preparedness & Reaction',
+        instructions: [
+          Instruction(
+            icon: Icons.vibration,
+            text:
+                'If you feel an earthquake, drop, cover, then hold on. When shaking stops, move to high ground.',
+          ),
+          Instruction(
+            icon: Icons.directions_run,
+            text: 'Evacuate immediately. Do not wait for official warnings.',
+          ),
+          Instruction(
+            icon: Icons.waves,
+            text:
+                'Stay away from the coast. A tsunami is a series of waves that may last for hours.',
+          ),
+          Instruction(
+            icon: Icons.radio,
+            text: 'Listen to emergency information and alerts.',
+          ),
+        ],
+      ),
     ],
   ),
   'tornado': DisasterInfo(
@@ -143,12 +221,31 @@ final Map<String, DisasterInfo> disasterData = {
     navActiveTextColor: const Color(0xFF4C566A),
     iconBgColor: Colors.black.withOpacity(0.2),
     sections: [
-      InstructionSection(title: 'Preparedness & Reaction', instructions: [
-        Instruction(icon: Icons.radio, text: 'Stay informed. Monitor weather radio, TV, or online sources for tornado watches and warnings.'),
-        Instruction(icon: Icons.house_siding, text: 'Go to a safe shelter immediately, such as a basement, storm cellar, or an interior room on the lowest floor.'),
-        Instruction(icon: Icons.shield, text: 'Protect your head and neck with your arms. Get under a sturdy piece of furniture if possible.'),
-        Instruction(icon: Icons.car_crash, text: 'Avoid windows, doors, and outside walls. Do not stay in a mobile home or vehicle.'),
-      ]),
+      InstructionSection(
+        title: 'Preparedness & Reaction',
+        instructions: [
+          Instruction(
+            icon: Icons.radio,
+            text:
+                'Stay informed. Monitor weather radio, TV, or online sources for tornado watches and warnings.',
+          ),
+          Instruction(
+            icon: Icons.house_siding,
+            text:
+                'Go to a safe shelter immediately, such as a basement, storm cellar, or an interior room on the lowest floor.',
+          ),
+          Instruction(
+            icon: Icons.shield,
+            text:
+                'Protect your head and neck with your arms. Get under a sturdy piece of furniture if possible.',
+          ),
+          Instruction(
+            icon: Icons.car_crash,
+            text:
+                'Avoid windows, doors, and outside walls. Do not stay in a mobile home or vehicle.',
+          ),
+        ],
+      ),
     ],
   ),
 };
@@ -332,7 +429,9 @@ class DisasterNavBar extends StatelessWidget {
                     duration: const Duration(milliseconds: 300),
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     decoration: BoxDecoration(
-                      color: isActive ? disaster.navActiveBgColor : Colors.transparent,
+                      color: isActive
+                          ? disaster.navActiveBgColor
+                          : Colors.transparent,
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Text(
@@ -341,7 +440,9 @@ class DisasterNavBar extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: isActive ? disaster.navActiveTextColor : Colors.white,
+                        color: isActive
+                            ? disaster.navActiveTextColor
+                            : Colors.white,
                       ),
                     ),
                   ),
@@ -390,7 +491,11 @@ class InstructionSectionsList extends StatelessWidget {
                         color: disaster.iconBgColor,
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(inst.icon, color: disaster.textColor, size: 24),
+                      child: Icon(
+                        inst.icon,
+                        color: disaster.textColor,
+                        size: 24,
+                      ),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -410,7 +515,7 @@ class InstructionSectionsList extends StatelessWidget {
                   ],
                 ),
               );
-            }).toList(),
+            }),
             const SizedBox(height: 24), // Space between sections
           ],
         );
@@ -427,17 +532,28 @@ class BackgroundWidgets extends StatelessWidget {
     return const Placeholder();
   }
 }
-Widget _buildFloatingIcon(IconData icon, Color color, {double? top, double? bottom, double? left, double? right, double angle = 0, double size = 120, double opacity = 1.0}) {
-    return Positioned(
-      top: top,
-      bottom: bottom,
-      left: left,
-      right: right,
-      child: Transform.rotate(
-        angle: angle * (pi / 180),
-        child: Icon(icon, size: size, color: color.withOpacity(opacity)),
-      ),
-    );
+
+Widget _buildFloatingIcon(
+  IconData icon,
+  Color color, {
+  double? top,
+  double? bottom,
+  double? left,
+  double? right,
+  double angle = 0,
+  double size = 120,
+  double opacity = 1.0,
+}) {
+  return Positioned(
+    top: top,
+    bottom: bottom,
+    left: left,
+    right: right,
+    child: Transform.rotate(
+      angle: angle * (pi / 180),
+      child: Icon(icon, size: size, color: color.withOpacity(opacity)),
+    ),
+  );
 }
 
 class EarthquakeBackground extends StatelessWidget {
@@ -448,11 +564,52 @@ class EarthquakeBackground extends StatelessWidget {
     return Stack(
       children: [
         CustomPaint(painter: GridPainter(), child: Container()),
-        Container(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.black.withOpacity(0.0), Colors.transparent]))),
-        Container(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.bottomCenter, end: Alignment.topCenter, colors: [Colors.black.withOpacity(0.0), Colors.transparent], stops: const [0.0, 0.5]))),
-        _buildFloatingIcon(Icons.apartment, Colors.white, opacity: 0.12, size: 160, top: 40, left: -60, angle: 10),
-        _buildFloatingIcon(Icons.home, Colors.white, opacity: 0.15, size: 120, top: MediaQuery.of(context).size.height * 0.3, right: -40, angle: -5),
-        _buildFloatingIcon(Icons.architecture, Colors.white, opacity: 0.1, size: 140, bottom: 80, left: 30, angle: 20),
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.black.withOpacity(0.0), Colors.transparent],
+            ),
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              colors: [Colors.black.withOpacity(0.0), Colors.transparent],
+              stops: const [0.0, 0.5],
+            ),
+          ),
+        ),
+        _buildFloatingIcon(
+          Icons.apartment,
+          Colors.white,
+          opacity: 0.12,
+          size: 160,
+          top: 40,
+          left: -60,
+          angle: 10,
+        ),
+        _buildFloatingIcon(
+          Icons.home,
+          Colors.white,
+          opacity: 0.15,
+          size: 120,
+          top: MediaQuery.of(context).size.height * 0.3,
+          right: -40,
+          angle: -5,
+        ),
+        _buildFloatingIcon(
+          Icons.architecture,
+          Colors.white,
+          opacity: 0.1,
+          size: 140,
+          bottom: 80,
+          left: 30,
+          angle: 20,
+        ),
       ],
     );
   }
@@ -475,9 +632,33 @@ class FloodBackground extends StatelessWidget {
           ),
           child: Container(),
         ),
-        _buildFloatingIcon(Icons.water_drop, Colors.white, opacity: 0.1, size: 180, top: -50, right: -70, angle: -15),
-        _buildFloatingIcon(Icons.waves, Colors.white, opacity: 0.08, size: 150, bottom: 100, left: -50, angle: 20),
-        _buildFloatingIcon(Icons.flood, Colors.white, opacity: 0.06, size: 120, top: MediaQuery.of(context).size.height * 0.4, left: -20, angle: -30),
+        _buildFloatingIcon(
+          Icons.water_drop,
+          Colors.white,
+          opacity: 0.1,
+          size: 180,
+          top: -50,
+          right: -70,
+          angle: -15,
+        ),
+        _buildFloatingIcon(
+          Icons.waves,
+          Colors.white,
+          opacity: 0.08,
+          size: 150,
+          bottom: 100,
+          left: -50,
+          angle: 20,
+        ),
+        _buildFloatingIcon(
+          Icons.flood,
+          Colors.white,
+          opacity: 0.06,
+          size: 120,
+          top: MediaQuery.of(context).size.height * 0.4,
+          left: -20,
+          angle: -30,
+        ),
       ],
     );
   }
@@ -510,8 +691,12 @@ class FloodWavePainter extends CustomPainter {
 
       for (double x = 0; x <= size.width; x++) {
         // --- FIX 2: CORRECTLY CALL sin() ---
-        final y = startY + (size.height * amplitude * 0.5 * (i + 1)) *
-            sin(x / size.width * frequency * 2 * pi); // Use 'pi' constant from dart:math
+        final y =
+            startY +
+            (size.height * amplitude * 0.5 * (i + 1)) *
+                sin(
+                  x / size.width * frequency * 2 * pi,
+                ); // Use 'pi' constant from dart:math
         path.lineTo(x, y);
       }
       path.lineTo(size.width, size.height);
@@ -525,15 +710,32 @@ class FloodWavePainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-
 class WildfireBackground extends StatelessWidget {
   const WildfireBackground({super.key});
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-        _buildFloatingIcon(Icons.local_fire_department, Colors.black, opacity: 0.1, size: 200, top: 100, right: -50, angle: -20),
-        _buildFloatingIcon(Icons.fireplace, Colors.black, opacity: 0.08, size: 150, bottom: 50, left: -40, angle: 15),
-    ]);
+    return Stack(
+      children: [
+        _buildFloatingIcon(
+          Icons.local_fire_department,
+          Colors.black,
+          opacity: 0.1,
+          size: 200,
+          top: 100,
+          right: -50,
+          angle: -20,
+        ),
+        _buildFloatingIcon(
+          Icons.fireplace,
+          Colors.black,
+          opacity: 0.08,
+          size: 150,
+          bottom: 50,
+          left: -40,
+          angle: 15,
+        ),
+      ],
+    );
   }
 }
 
@@ -541,10 +743,28 @@ class TsunamiBackground extends StatelessWidget {
   const TsunamiBackground({super.key});
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-        _buildFloatingIcon(Icons.waves, Colors.black, opacity: 0.05, size: 250, top: 80, left: -60, angle: 10),
-        _buildFloatingIcon(Icons.pool, Colors.black, opacity: 0.05, size: 180, bottom: 60, right: -40, angle: -15),
-    ]);
+    return Stack(
+      children: [
+        _buildFloatingIcon(
+          Icons.waves,
+          Colors.black,
+          opacity: 0.05,
+          size: 250,
+          top: 80,
+          left: -60,
+          angle: 10,
+        ),
+        _buildFloatingIcon(
+          Icons.pool,
+          Colors.black,
+          opacity: 0.05,
+          size: 180,
+          bottom: 60,
+          right: -40,
+          angle: -15,
+        ),
+      ],
+    );
   }
 }
 
@@ -552,18 +772,37 @@ class TornadoBackground extends StatelessWidget {
   const TornadoBackground({super.key});
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-        _buildFloatingIcon(Icons.sync, Colors.black, opacity: 0.08, size: 220, top: 120, right: -50, angle: 0),
-        _buildFloatingIcon(Icons.shield, Colors.black, opacity: 0.06, size: 180, bottom: 80, left: -40, angle: 10),
-    ]);
+    return Stack(
+      children: [
+        _buildFloatingIcon(
+          Icons.sync,
+          Colors.black,
+          opacity: 0.08,
+          size: 220,
+          top: 120,
+          right: -50,
+          angle: 0,
+        ),
+        _buildFloatingIcon(
+          Icons.shield,
+          Colors.black,
+          opacity: 0.06,
+          size: 180,
+          bottom: 80,
+          left: -40,
+          angle: 10,
+        ),
+      ],
+    );
   }
 }
-
 
 class GridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = Colors.white.withOpacity(0.05)..strokeWidth = 1;
+    final paint = Paint()
+      ..color = Colors.white.withOpacity(0.05)
+      ..strokeWidth = 1;
     for (double i = 0; i < size.width; i += 50) {
       canvas.drawLine(Offset(i, 0), Offset(i, size.height), paint);
     }
@@ -571,6 +810,7 @@ class GridPainter extends CustomPainter {
       canvas.drawLine(Offset(0, i), Offset(size.width, i), paint);
     }
   }
+
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

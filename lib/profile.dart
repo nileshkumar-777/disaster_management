@@ -41,7 +41,10 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
         return;
       }
 
-      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
 
       if (doc.exists) {
         final data = doc.data()!;
@@ -140,7 +143,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
         Positioned.fill(
           child: _imageUrl != null && _imageUrl!.isNotEmpty
               ? Image.network(_imageUrl!, fit: BoxFit.cover)
-              : Image.asset('assets/big1.jpg', fit: BoxFit.cover),
+              : Image.asset('assets/big12.jpg', fit: BoxFit.cover),
         ),
         Positioned.fill(
           child: Container(
@@ -214,12 +217,15 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFFE9E6FF),
-                  letterSpacing: 1.5)),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFFE9E6FF),
+              letterSpacing: 1.5,
+            ),
+          ),
           const SizedBox(height: 12),
           child,
         ],
@@ -239,14 +245,19 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
         ),
         child: Column(
           children: [
-            Text(title,
-                style: const TextStyle(fontSize: 12, color: Color(0xFFC0C0D4))),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 12, color: Color(0xFFC0C0D4)),
+            ),
             const SizedBox(height: 6),
-            Text(value,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white)),
+            Text(
+              value,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
           ],
         ),
       ),

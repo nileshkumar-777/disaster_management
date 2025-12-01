@@ -3,15 +3,13 @@ import 'package:firebase_core/firebase_core.dart'; // Add this
 import 'package:safe_app/login%20and%20loading/loading.dart';
 import 'package:safe_app/login%20and%20loading/login.dart';
 import 'firebase_options.dart';
-import 'package:safe_app/home_screen.dart';
-import 'package:safe_app/login and loading/profilesetup.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform, // Make sure firebase_options.dart is set up
-);
+    options: DefaultFirebaseOptions
+        .currentPlatform, // Make sure firebase_options.dart is set up
+  );
   runApp(const MyApp());
 }
 

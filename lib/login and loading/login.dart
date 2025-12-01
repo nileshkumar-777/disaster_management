@@ -46,7 +46,10 @@ class _MainScreenState extends State<MainScreen> {
       final user = credential.user;
       if (user == null) return;
 
-      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
       if (doc.exists && doc.data()!['name'] != null) {
         Navigator.pushReplacement(
           context,
@@ -59,9 +62,9 @@ class _MainScreenState extends State<MainScreen> {
         );
       }
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Login failed: $error")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Login failed: $error")));
     }
   }
 
@@ -104,13 +107,21 @@ class _MainScreenState extends State<MainScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Welcome\nBack",
-                      style: GoogleFonts.montserrat(
-                          fontSize: 34, fontWeight: FontWeight.bold)),
+                  Text(
+                    "Welcome\nBack",
+                    style: GoogleFonts.montserrat(
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   const SizedBox(height: 8),
-                  Text("Hey! Good to see you again",
-                      style: GoogleFonts.openSans(
-                          fontSize: 16, color: Colors.grey[600])),
+                  Text(
+                    "Hey! Good to see you again",
+                    style: GoogleFonts.openSans(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                    ),
+                  ),
 
                   const SizedBox(height: 40),
 
@@ -203,9 +214,10 @@ class _MainScreenState extends State<MainScreen> {
                       child: Text(
                         "SIGN IN",
                         style: GoogleFonts.montserrat(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),

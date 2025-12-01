@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:safe_app/guide.dart';
-import 'package:safe_app/profile.dart';
-
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:safe_app/guide.dart'; // Ensure this file contains DisasterPrepScreen
+import 'package:safe_app/profile.dart'; // Ensure this file contains ProfileScreenWidget
+import 'package:safe_app/home screen/sos.dart';
+import 'package:safe_app/home screen/resources.dart';
+import 'package:safe_app/home screen/alert.dart';
+import "package:safe_app/safeplace.dart";
+import 'package:safe_app/firefighter.dart';
+import 'package:safe_app/hospital.dart';
+import 'package:safe_app/police.dart';
 
 class DisasterManagementApp extends StatelessWidget {
   const DisasterManagementApp({super.key});
@@ -13,9 +19,8 @@ class DisasterManagementApp extends StatelessWidget {
     return MaterialApp(
       title: 'Disaster Management',
       theme: ThemeData(
-
         fontFamily: 'Inter',
-        scaffoldBackgroundColor: const Color(0xFFF8F9FA), // bg-gray-50
+        scaffoldBackgroundColor: const Color(0xFFF8F9FA),
         useMaterial3: true,
       ),
       home: const DisasterScreen(),
@@ -32,14 +37,13 @@ class DisasterScreen extends StatefulWidget {
 }
 
 class _DisasterScreenState extends State<DisasterScreen> {
-  int _selectedIndex = 0; // Tracks the currently selected tab
+  int _selectedIndex = 0;
 
-  // List of widgets to show for each tab
-  static const List<Widget> _widgetOptions = <Widget>[
-    _HomeScreenContent(), // The original screen content
-    Center(child: Text('Safe Zones Map Page')), // Placeholder for Safe Zones
-    Center(child: Text('Alerts Page')), // Placeholder for Alerts
-    ProfileScreenWidget(), // Placeholder for Profile
+  static final List<Widget> _widgetOptions = <Widget>[
+    const _HomeScreenContent(),
+    const KnapsackApp(),
+    const AlertScreen(),
+    const ProfileScreenWidget(),
   ];
 
   void _onItemTapped(int index) {
@@ -51,19 +55,17 @@ class _DisasterScreenState extends State<DisasterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      // THIS IS THE NEWLY ADDED BOTTOM NAVIGATION BAR
+      body: SafeArea(child: _widgetOptions.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+            backgroundColor: Colors.black,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.map_outlined),
-            label: 'Safe Zones',
+            icon: Icon(Icons.food_bank_rounded),
+            label: 'Resources',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications_outlined),
@@ -77,15 +79,15 @@ class _DisasterScreenState extends State<DisasterScreen> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue[800],
         unselectedItemColor: Colors.grey[600],
-        showUnselectedLabels: true, // Makes labels always visible
+        showUnselectedLabels: true,
         onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed, // Good for 4+ items
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
 }
 
-// The original screen content, now in its own widget
+//--- Home Screen Content ---//
 class _HomeScreenContent extends StatelessWidget {
   const _HomeScreenContent();
 
@@ -96,14 +98,14 @@ class _HomeScreenContent extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const _Header(),
-            const SizedBox(height: 24.0),
-            const _DisasterAlertCard(),
-            const SizedBox(height: 24.0),
-            _EmergencyServices(),
-            const SizedBox(height: 24.0),
-            const QuickAccess(),  
+          children: const [
+            WelcomeHeader(),
+            SizedBox(height: 24.0),
+            _DisasterAlertCard(),
+            SizedBox(height: 24.0),
+            EmergencyServices(), // ✅ fixed name
+            SizedBox(height: 24.0),
+            QuickAccess(),
           ],
         ),
       ),
@@ -111,55 +113,100 @@ class _HomeScreenContent extends StatelessWidget {
   }
 }
 
-// Header Section: "Welcome back, Nilesh" + Avatar
-class _Header extends StatelessWidget {
-  const _Header();
+//--- Dynamic Welcome Header Widget ---//
+class WelcomeHeader extends StatefulWidget {
+  const WelcomeHeader({super.key});
+
+  @override
+  State<WelcomeHeader> createState() => _WelcomeHeaderState();
+}
+
+class _WelcomeHeaderState extends State<WelcomeHeader> {
+  late Future<String?> _userNameFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _userNameFuture = _fetchUserName();
+  }
+
+  Future<String?> _fetchUserName() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+        if (userDoc.exists && userDoc.data() != null) {
+          return userDoc.get('name');
+        }
+      }
+    } catch (e) {
+      print("Error fetching user name: $e");
+    }
+    return 'User';
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return FutureBuilder<String?>(
+      future: _userNameFuture,
+      builder: (context, snapshot) {
+        String displayName = '...';
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError || !snapshot.hasData) {
+            displayName = 'User';
+          } else {
+            displayName = snapshot.data!;
+          }
+        }
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Welcome back,',
-              style: TextStyle(color: Color(0xFF6B7280)), // text-gray-500
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Welcome back,',
+                  style: TextStyle(color: Color(0xFF6B7280)),
+                ),
+                Text(
+                  displayName,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF111827),
+                  ),
+                ),
+              ],
             ),
-            Text(
-              'Nilesh',
-              style: TextStyle(
-                fontSize: 24, // text-2xl
-                fontWeight: FontWeight.bold, // font-bold
-                color: Color(0xFF111827), // text-gray-900
-              ),
+            const CircleAvatar(
+              radius: 24,
+              backgroundColor: Color(0xFFE5E7EB),
+              child: Icon(Icons.person, size: 30, color: Color(0xFF9CA3AF)),
             ),
           ],
-        ),
-        const CircleAvatar(
-          radius: 24, // w-12 h-12 -> 48px diameter
-          backgroundImage: NetworkImage('https://lh3.googleusercontent.com/aida-public/AB6AXuAJMP6swgyU1Dt2MTlyFHDYVXnaDFdA1pCSNNvoxoIQB6yG7ryBqPhg2J-PkJBSz0OvVf1kTRZEirmmFSwcebU0CKnnkzoeK9ZG0twHepOeumqbG4seve7Atjv04ThckJpV8CzicZYSYfTUuxDD2Z0Pg6DX9_I-YN7lBBAKPFvNrDRvRSVkCuEf43uoNCmOCeHiIrb3eb_RFxYDS09KKBJt6xXNOva6KlP7kRZWKU2sO0Ifki4cgMF4pUujRwPl5mjwt5cLwCF_YqM'),
-          backgroundColor: Color(0xFFE5E7EB), // bg-gray-200
-        ),
-      ],
+        );
+      },
     );
   }
 }
 
-// Disaster Alert Card
+//--- Disaster Alert Card ---//
 class _DisasterAlertCard extends StatelessWidget {
   const _DisasterAlertCard();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16.0), // p-4
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: const Color(0xFFEF4444), // bg-red-500
-        borderRadius: BorderRadius.circular(16.0), // rounded-2xl
-        boxShadow: [ // shadow-lg
+        color: const Color(0xFFEF4444),
+        borderRadius: BorderRadius.circular(16.0),
+        boxShadow: [
           BoxShadow(
             color: Colors.red.withOpacity(0.3),
             spreadRadius: 2,
@@ -179,26 +226,28 @@ class _DisasterAlertCard extends StatelessWidget {
                   'Disaster Alert',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18, // text-lg
-                    fontWeight: FontWeight.bold, // font-bold
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   'High-intensity earthquake expected',
-                  style: TextStyle(color: Colors.white, fontSize: 14), // text-sm
+                  style: TextStyle(color: Colors.white, fontSize: 14),
                 ),
               ],
             ),
           ),
-          Icon(Icons.warning_rounded, color: Colors.white, size: 36), // material-symbols-outlined + text-4xl
+          Icon(Icons.warning_rounded, color: Colors.white, size: 36),
         ],
       ),
     );
   }
 }
 
-// Emergency Services Section
-class _EmergencyServices extends StatelessWidget {
+//--- Emergency Services Section ---//
+class EmergencyServices extends StatelessWidget {
+  const EmergencyServices({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -207,24 +256,81 @@ class _EmergencyServices extends StatelessWidget {
         const Text(
           'Emergency Services',
           style: TextStyle(
-            fontSize: 18, // text-lg
-            fontWeight: FontWeight.w600, // font-semibold
-            color: Color(0xFF1F2937), // text-gray-800
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1F2937),
           ),
         ),
-        const SizedBox(height: 16.0), // mb-4
+        const SizedBox(height: 16.0),
         GridView.count(
-          crossAxisCount: 2, // grid-cols-2
+          crossAxisCount: 2,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          crossAxisSpacing: 16.0, // gap-4
-          mainAxisSpacing: 16.0,  // gap-4
+          crossAxisSpacing: 16.0,
+          mainAxisSpacing: 16.0,
           childAspectRatio: 1.5,
-          children: const [
-            _EmergencyServiceButton(icon: Icons.sos, label: 'SOS', color: Color(0xFFEF4444)),
-            _EmergencyServiceButton(icon: Icons.local_police, label: 'Police', color: Color(0xFF3B82F6)),
-            _EmergencyServiceButton(icon: Icons.local_fire_department, label: 'Firefighter', color: Color(0xFFF97316)),
-            _EmergencyServiceButton(icon: Icons.medical_services_rounded, label: 'Ambulance', color: Color(0xFF22C55E)),
+          children: [
+            _EmergencyServiceButton(
+              icon: Icons.sos,
+              label: 'SOS',
+              color: const Color(0xFFEF4444),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        Scaffold(body: const Center(child: QuickSetupScreen())),
+                  ),
+                );
+              },
+            ),
+            _EmergencyServiceButton(
+              icon: Icons.local_police,
+              label: 'Police',
+              color: const Color(0xFF3B82F6),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => Scaffold(
+                      body: const Center(child: PoliceRouteOptimizerWidget()),
+                    ),
+                  ),
+                );
+              },
+            ),
+            _EmergencyServiceButton(
+              icon: Icons.local_fire_department,
+              label: 'Firefighter',
+              color: const Color(0xFFF97316),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => Scaffold(
+                      body: const Center(child: FireRouteOptimizerWidget()),
+                    ),
+                  ),
+                );
+              },
+            ),
+            _EmergencyServiceButton(
+              icon: Icons.medical_services_rounded,
+              label: 'Ambulance',
+              color: const Color(0xFF22C55E),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => Scaffold(
+                      body: const Center(
+                        child: AmbulanceRouteOptimizerWidget(),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ],
@@ -232,38 +338,39 @@ class _EmergencyServices extends StatelessWidget {
   }
 }
 
-// Reusable button widget for the Emergency Services grid
 class _EmergencyServiceButton extends StatelessWidget {
   final IconData icon;
   final String label;
   final Color color;
+  final VoidCallback onTap;
 
   const _EmergencyServiceButton({
     required this.icon,
     required this.label,
     required this.color,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 1, // shadow-sm
+      elevation: 1,
       shadowColor: Colors.black.withOpacity(0.1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)), // rounded-2xl
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
-        onTap: () {},
+        onTap: onTap,
         borderRadius: BorderRadius.circular(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: 30), // text-3xl
-            const SizedBox(height: 8.0), // mb-2
+            Icon(icon, color: color, size: 30),
+            const SizedBox(height: 8.0),
             Text(
               label,
               style: const TextStyle(
-                fontSize: 16, // text-base
-                fontWeight: FontWeight.w500, // font-medium
-                color: Color(0xFF374151), // text-gray-700
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF374151),
               ),
             ),
           ],
@@ -273,7 +380,26 @@ class _EmergencyServiceButton extends StatelessWidget {
   }
 }
 
-// Quick Access Section
+class DetailScreen extends StatelessWidget {
+  final String title;
+
+  const DetailScreen({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: Center(
+        child: Text(
+          "Welcome to $title service",
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+}
+
+//--- Quick Access Section ---//
 class QuickAccess extends StatelessWidget {
   const QuickAccess({super.key});
 
@@ -300,10 +426,11 @@ class QuickAccess extends StatelessWidget {
           titleColor: const Color(0xFF14532D),
           subtitleColor: const Color(0xFF15803D),
           onTap: () {
-            // Navigate to the SafeZonesPage when this item is tapped.
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SafeZonesPage()),
+              MaterialPageRoute(
+                builder: (context) => const ShortestPathFinderWidget(),
+              ),
             );
           },
         ),
@@ -317,10 +444,11 @@ class QuickAccess extends StatelessWidget {
           titleColor: const Color(0xFF1E3A8A),
           subtitleColor: const Color(0xFF1D4ED8),
           onTap: () {
-            // Navigate to the GuidePage when this item is tapped.
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const DisasterPrepScreen()),
+              MaterialPageRoute(
+                builder: (context) => const DisasterPrepScreen(),
+              ),
             );
           },
         ),
@@ -329,7 +457,6 @@ class QuickAccess extends StatelessWidget {
   }
 }
 
-// Reusable widget for the Quick Access items
 class _QuickAccessItem extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -341,7 +468,6 @@ class _QuickAccessItem extends StatelessWidget {
   final VoidCallback? onTap;
 
   const _QuickAccessItem({
-    super.key,
     required this.icon,
     required this.title,
     required this.subtitle,
@@ -387,10 +513,7 @@ class _QuickAccessItem extends StatelessWidget {
                   ),
                   Text(
                     subtitle,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: subtitleColor,
-                    ),
+                    style: TextStyle(fontSize: 14, color: subtitleColor),
                   ),
                 ],
               ),
@@ -403,7 +526,7 @@ class _QuickAccessItem extends StatelessWidget {
   }
 }
 
-// Placeholder for the Safe Zones page
+//--- Placeholder Safe Zones Page ---//
 class SafeZonesPage extends StatelessWidget {
   const SafeZonesPage({super.key});
 
@@ -414,27 +537,19 @@ class SafeZonesPage extends StatelessWidget {
         title: const Text('Safe Zones'),
         backgroundColor: const Color(0xFFDCFCE7),
       ),
-      body: const Center(
-        child: Text('This is the Safe Zones Page.'),
-      ),
+      body: const Center(child: Text('This is the Safe Zones Page.')),
     );
   }
 }
 
-// Placeholder for the Guide page
-// class GuidePage extends StatelessWidget {
-//   const GuidePage({super.key});
+// class QuickSetupScreen extends StatelessWidget {
+//   const QuickSetupScreen({super.key});
 
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Guide / First Aid'),
-//         backgroundColor: const Color(0xFFDBEAFE),
-//       ),
-//       body: const Center(
-//         child: Text('This is the Guide / First Aid Page.'),
-//       ),
+//       appBar: AppBar(title: const Text('Quick Setup')),
+//       body: const Center(child: Text('Setup your SOS contacts here')),
 //     );
 //   }
 // }
